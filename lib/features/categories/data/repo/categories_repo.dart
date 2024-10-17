@@ -14,11 +14,14 @@ class CategoriesRepoImp extends CategoriesRepo {
   Future<Either<Failures, GetCategoriesResponseModel>> getCategories() async {
     try {
       final data = await ApiService(dio: Dio())
-          .get(endPoint: AppConstants.categoryEndPoint);
+          .get(endPoint: AppConstants.categoryEndPoint, headers: {
+        'lang': 'ar',
+      });
       GetCategoriesResponseModel getCategoriesResponseModel =
           GetCategoriesResponseModel.fromJson(data);
       return Right(getCategoriesResponseModel);
     } on DioException catch (e) {
+      print(e.toString());
       return Left(ServerError.fromDioError(e));
     }
   }

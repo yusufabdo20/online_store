@@ -15,7 +15,7 @@ class ApiService {
     //   headers: headers,
     // );
     final response = await dio.get(
-      '${AppConstants.baseUrl}$endPoint',
+      'https://student.valuxapps.com/api/categories',
       options: Options(
         headers: headers,
         contentType: "application/json",
