@@ -18,3 +18,20 @@ final class GetCategoriesError extends CategoriesState {
 }
 
 final class GetCategoriesLoading extends CategoriesState {}
+
+
+
+
+final class GetCategoryDetailsSuccuss extends CategoriesState {
+  final GetCategoryDetailsResponseModel getCategoryDetailsResponseModel;
+
+  GetCategoryDetailsSuccuss({required this.getCategoryDetailsResponseModel});
+}
+
+final class GetCategoryDetailsError extends CategoriesState {
+  final String error;
+
+  GetCategoryDetailsError({required this.error});
+}
+
+final class GetCategoryDetailsLoading extends CategoriesState {}

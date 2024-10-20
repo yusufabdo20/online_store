@@ -7,13 +7,11 @@ class GetCategoriesResponseModel {
 
   GetCategoriesResponseModel({this.status, this.message, this.data});
 
-  factory GetCategoriesResponseModel.fromJson(Map<String, dynamic> json) {
+  factory GetCategoriesResponseModel.fromJson(json) {
     return GetCategoriesResponseModel(
-      status: json['status'] as bool?,
-      message: json['message'] as dynamic,
-      data: json['data'] == null
-          ? null
-          : Data.fromJson(json['data'] as Map<String, dynamic>),
+      status: json['status'],
+      message: json['message'],
+      data: json['data'] == null ? null : Data.fromJson(json['data']),
     );
   }
 

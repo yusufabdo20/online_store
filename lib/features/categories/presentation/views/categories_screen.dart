@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_store/features/categories/data/models/get_categories_response_model/category.dart';
 import 'package:online_store/features/categories/presentation/cubit/categories_cubit.dart';
 
+import '../../../../core/shared/app_methods.dart';
+import 'category_details_screen.dart';
+
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
@@ -12,31 +15,32 @@ class CategoriesScreen extends StatelessWidget {
       create: (context) => CategoriesCubit()..getCategories(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Categories"),
+          title: const Text("Categories"),
         ),
         body: SafeArea(child: Center(
           child: BlocBuilder<CategoriesCubit, CategoriesState>(
             builder: (context, state) {
               if (state is GetCategoriesSuccuss) {
+                List<Category> categories =
+                    state.getCategoriesResponseModel.data?.categories ?? [];
                 return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    itemCount: categories.length ?? 0,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 0.7,
                       crossAxisCount: 2,
                     ),
                     itemBuilder: (context, index) {
                       return CategoryItemWidget(
-                        category: Category(
-                          name: "sssss",
-                          image:
-                              'https://images.pexels.com/photos/6471779/pexels-photo-6471779.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                        ),
+                        category: categories[index],
                       );
                     });
               } else if (state is GetCategoriesLoading) {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               } else if (state is GetCategoriesError) {
                 return Text(state.error);
               } else {
-                return SizedBox();
+                return const SizedBox();
               }
             },
           ),
@@ -51,13 +55,28 @@ class CategoryItemWidget extends StatelessWidget {
   final Category category;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.blueGrey,
-      child: Column(
-        children: [
-          Image.network(category.image ?? ""),
-          Text(category.name ?? "")
-        ],
+    return GestureDetector(
+      onTap: () {
+        // BlocProvider.of<CategoriesCubit>(context)
+        //     .getCategoryDetails(categoryId: category.id ?? 0);
+
+        AppMethods.navigateTo(context, CategoryDetailsScreen(category: category,));
+      },
+      child: Card(
+        color: Colors.cyan.shade900,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 5,
+            ),
+            Image.network(category.image ??
+                "https://images.pexels.com/photos/6471779/pexels-photo-6471779.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
+            Text(
+              category.name ?? "",
+              style: TextStyle(color: Colors.white, fontSize: 30),
+            )
+          ],
+        ),
       ),
     );
   }

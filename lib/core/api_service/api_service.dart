@@ -14,14 +14,14 @@ class ApiService {
     //   contentType: 'application/json',
     //   headers: headers,
     // );
-    final response = await dio.get(
-      'https://student.valuxapps.com/api/categories',
+    final Response response = await dio.get(
+    "${AppConstants.baseUrl}$endPoint" ,
       options: Options(
         headers: headers,
-        contentType: "application/json",
+        // contentType: "application/json",
       ),
       queryParameters: queryParameters,
     );
-    return response.data ; 
+    return response.data;
   }
 }

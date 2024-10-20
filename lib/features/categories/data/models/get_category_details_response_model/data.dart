@@ -1,8 +1,8 @@
-import 'category.dart';
+import 'product.dart';
 
 class Data {
   int? currentPage;
-  List<Category>? categories;
+  List<Product>? products;
   String? firstPageUrl;
   int? from;
   int? lastPage;
@@ -16,7 +16,7 @@ class Data {
 
   Data({
     this.currentPage,
-    this.categories,
+    this.products,
     this.firstPageUrl,
     this.from,
     this.lastPage,
@@ -31,8 +31,8 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         currentPage: json['current_page'] as int?,
-        categories: (json['data'] as List<dynamic>?)
-            ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
+        products: (json['data'] as List<dynamic>?)
+            ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
             .toList(),
         firstPageUrl: json['first_page_url'] as String?,
         from: json['from'] as int?,
@@ -48,7 +48,7 @@ class Data {
 
   Map<String, dynamic> toJson() => {
         'current_page': currentPage,
-        'data': categories?.map((e) => e.toJson()).toList(),
+        'data': products?.map((e) => e.toJson()).toList(),
         'first_page_url': firstPageUrl,
         'from': from,
         'last_page': lastPage,

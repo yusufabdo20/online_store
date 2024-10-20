@@ -1,11 +1,11 @@
 class Category {
-  int? id;
+  num? id;
   String? name;
   String? image;
 
   Category({this.id, this.name, this.image});
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory Category.fromJson(json) => Category(
         id: json['id'] as int?,
         name: json['name'] as String?,
         image: json['image'] as String?,
