@@ -12,29 +12,40 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CategoriesCubit.instance(context)..getCategories(),
+      create: (context) => CategoriesCubit()..getCategories(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Categories"),
         ),
         body: SafeArea(child: Center(
-          child: BlocBuilder<CategoriesCubit, CategoriesState>(
+          child: BlocConsumer<CategoriesCubit, CategoriesState>(
+            listener: (context, state){
+              if (state is GetCategoriesSuccuss)
+              {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Success"),)  ,); 
+              }
+            },
             builder: (context, state) {
               if (state is GetCategoriesSuccuss) {
                 List<Category> categories =
                     state.getCategoriesResponseModel.data?.categories ?? [];
-                return GridView.builder(
-                    itemCount: categories.length ?? 0,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 0.7,
-                      crossAxisCount: 2,
-                    ),
-                    itemBuilder: (context, index) {
-                      return CategoryItemWidget(
-                        category: categories[index],
-                      );
-                    });
+                return RefreshIndicator(
+                  color: Colors.black,
+
+                  onRefresh: ()=> CategoriesCubit.instance(context).getCategories() ,
+                  child: GridView.builder(
+                      itemCount: categories.length ?? 0,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 0.7,
+                        crossAxisCount: 2,
+                      ),
+                      itemBuilder: (context, index) {
+                        return CategoryItemWidget(
+                          category: categories[index],
+                        );
+                      }),
+                );
               } else if (state is GetCategoriesLoading) {
                 return const CircularProgressIndicator();
               } else if (state is GetCategoriesError) {
