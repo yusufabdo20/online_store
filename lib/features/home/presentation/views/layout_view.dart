@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../settings/presentation/settings_screen.dart';
 import 'home_view_body.dart';
 
 class LayoutView extends StatefulWidget {
@@ -37,9 +38,9 @@ class _LayoutViewState extends State<LayoutView> {
           label: "favorite"),
       const BottomNavigationBarItem(
           icon: Icon(
-            Icons.favorite,
+            Icons.settings,
           ),
-          label: "favorite"),
+          label: "settings"),
     ];
     final List<Widget> screens = [
       const HomeViewBody(),
@@ -64,13 +65,7 @@ class _LayoutViewState extends State<LayoutView> {
           fontSize: 50,
         ),
       ),
-      const Text(
-        "5",
-        style: TextStyle(
-          color: Colors.red,
-          fontSize: 50,
-        ),
-      ),
+       SettingsScreen(),
     ];
 
     return Scaffold(
