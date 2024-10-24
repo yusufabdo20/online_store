@@ -16,6 +16,7 @@ class OnlineStore extends StatelessWidget {
           return MaterialApp(
             theme: ThemeData.light(),
             darkTheme: ThemeData.dark(),
+            themeMode: state,
             debugShowCheckedModeBanner: false,
             title: 'Online Store',
             home: LayoutView(),
